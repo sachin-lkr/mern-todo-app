@@ -1,15 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "../style/addtask.css";
+import { useNavigate } from 'react-router-dom';
 export const AddTask = () => {
+  const [taskData , setTaskData]=useState();
+  const navigate =useNavigate()
+const handelAddTask= async()=>{
+  console.log(taskData);
+  let result =await fetch("http://localhost:8080/add-task",{
+    method:"post",
+    body:JSON.stringify(taskData),
+    headers:{
+      'Content-Type':'application/JSON'
+    }
+  });
+  let results= await result.json()
+  if(results){
+    navigate("/")
+    console.log("new task added");
+
+  }
+ }
+
   return(
     <div className='container'>
         <div className="formContainer">
             <h1 className='heading'> Add New Task</h1>
-        <form >
-          <input type="text" name='title' placeholder='Enter Task' />
-          <textarea rows={4} type='text' name='description' placeholder='Task Description'/>
-          <button className="btn">Add Task</button>
-        </form>
+        <div className='formDiv'>
+          <input onChange={(e)=>setTaskData({...taskData,title:e.target.value})} type="text" name='title' placeholder='Enter Task' />
+          <textarea onChange={(e)=>setTaskData({...taskData,description:e.target.value})} rows={4} type='text' name='description' placeholder='Task Description'/>
+          <button onClick={handelAddTask} className="btn">Add Task</button>
+        </div>
         </div>
         
     </div>
