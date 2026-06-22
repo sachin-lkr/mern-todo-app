@@ -1,168 +1,130 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+.taskContainer {
+  width: 90%;
+  max-width: 1100px;
+  margin: 40px auto;
+  background: #ffffff;
+
+  padding: 25px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
-body{
-background:#eef3ff;
+.taskContainer h1 {
+  text-align: center;
+
+  color: #1e293b;
+
+  margin-bottom: 25px;
 }
 
-.taskContainer{
+.task-list {
+  padding: 0;
 
-width:90%;
-
-max-width:1000px;
-
-margin:50px auto;
-
-padding:35px;
-
-background:#ffffff;
-
-border-radius:18px;
-
-box-shadow:
-0 12px 30px rgba(0,0,0,.08);
-
+  margin: 0;
 }
 
-.taskContainer h1{
+.header-container {
+  display: grid;
 
-text-align:center;
+  grid-template-columns: 80px 1fr 2fr 220px;
 
-font-size:40px;
+  background: #0f172a;
 
-margin-bottom:35px;
+  color: white;
 
-color:#1e293b;
+  padding: 16px;
 
+  border-radius: 10px;
+
+  margin-bottom: 14px;
 }
 
-/* Main List */
+.list-header {
+  list-style: none;
 
-.task-list{
+  text-align: center;
 
-list-style:none;
+  font-size: 16px;
 
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
+  font-weight: bold;
 }
 
-/* Header */
+.item-container > div {
+  display: grid;
 
-.list-header{
+  grid-template-columns: 80px 1fr 2fr 120px 120px;
 
-display:inline-flex;
+  align-items: center;
 
-justify-content:center;
+  background: #f8fafc;
 
-align-items:center;
+  padding: 14px;
 
+  margin-bottom: 12px;
 
+  border-radius: 10px;
 
-padding:16px;
-
-background:
-linear-gradient(
-90deg,
-#2563eb,
-#3b82f6
-);
-
-color:white;
-
-font-size:18px;
-
-font-weight:700;
-
-border-radius:10px;
-
-margin-right:5px;
-
-box-shadow:
-0 4px 12px
-rgba(37,99,235,.3);
-display:grid;
-
-grid-template-columns:
-50px
-1fr
-2fr;
-
+  transition: 0.3s;
 }
 
-/* Row */
+.item-container > div:hover {
+  transform: translateY(-2px);
 
-.task-list>div{
-
-display:grid;
-
-grid-template-columns:
-50px
-1fr
-2fr;
-
-gap:15px;
-
-padding:18px;
-
-background:#f8fafc;
-
-border-radius:12px;
-
-align-items:center;
-
-transition:.3s;
-
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
-.task-list>div:hover{
+.list-item {
+  list-style: none;
 
-transform:translateY(-3px);
+  text-align: center;
 
-box-shadow:
-0 8px 18px
-rgba(0,0,0,.08);
+  color: #334155;
 
+  font-size: 15px;
 }
 
-/* Item */
+.btn {
+  border: none;
 
-.list-item{
+  padding: 10px 16px;
 
-list-style:none;
+  border-radius: 8px;
 
-padding:14px;
+  color: white;
 
-background:white;
+  font-size: 14px;
 
-border-radius:8px;
+  cursor: pointer;
 
-font-size:16px;
-
-font-weight:500;
-
-color:#334155;
-
-box-shadow:
-0 2px 8px
-rgba(0,0,0,.05);
-
-word-break:break-word;
-
+  transition: 0.3s;
 }
 
-/* Serial Number */
+.btn:hover {
+  transform: scale(1.05);
+}
 
-.list-item:first-child{
+/* Delete Button */
 
-font-weight:700;
+.list-item .btn {
+  background: #ef4444;
+}
 
-color:#2563eb;
+.list-item .btn:hover {
+  background: #dc2626;
+}
 
+/* Update Button */
+
+a .btn {
+  background: #22c55e;
+}
+
+a .btn:hover {
+  background: #16a34a;
+}
+
+a {
+  text-decoration: none;
 }
