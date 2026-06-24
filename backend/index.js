@@ -8,6 +8,7 @@ const PORT =8080;
 app.use(express.json());// access body data middleware
 app.use(cors()); // cors issu fix
 
+
 app.post("/add-task",async(req,res)=>{
     const db= await connection();
     const collection =await db.collection(collectioName);
@@ -19,7 +20,7 @@ app.post("/add-task",async(req,res)=>{
         res.send({message :"task not add", success:false,})
     }
 
-    res.send("working......");
+   
 });
 
 app.get("/tasks",async(req,res)=>{
@@ -33,7 +34,7 @@ app.get("/tasks",async(req,res)=>{
         res.send({message :"error try after sometime", success:false,})
     }
 
-    res.send("working......");
+   
 });
 // update task form
 app.get("/task/:id",async(req,res)=>{
@@ -64,7 +65,7 @@ app.put("/update-task",async(req,res)=>{
     };
     
 });
-
+// single delete
 app.delete("/delete/:id",async(req,res)=>{
     const {id}=req.params;
     console.log(id)
@@ -79,6 +80,24 @@ app.delete("/delete/:id",async(req,res)=>{
     }
 
     res.send("working......");
+});
+// multiple delete
+app.delete("/delete-multiple",async(req,res)=>{
+    const db= await connection();
+    const Ids = req.body;
+    const deleteTaskId= Ids.map((item)=>new ObjectId(item));
+    console.log(Ids)
+    
+     const collection =await db.collection(collectioName);
+     const result =await collection.deleteMany({_id:{$in:deleteTaskId}});
+
+    if(result){
+        res.send({message:"task deleted",success:result});
+    }else{
+        res.send({message :"error try after sometime", success:false,})
+    }
+
+   
 });
 
 
