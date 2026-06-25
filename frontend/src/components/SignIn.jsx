@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 function SignIn() {
   const [formData, setFormData] = useState({
-    
     email: "",
     password: "",
   });
@@ -16,15 +15,21 @@ function SignIn() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
-
-    alert("Signup Successful");
-
+    const result = await fetch("http://localhost:8080/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await result.json();
+    console.log(data);
+    if (data.token) {
+      document.cookie = `token=${data.token}`;
+    }
     setFormData({
-      
       email: "",
       password: "",
     });
@@ -34,8 +39,6 @@ function SignIn() {
     <div className="container1">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h1>Sign In</h1>
-
-       
 
         <input
           type="email"
@@ -55,12 +58,9 @@ function SignIn() {
           required
         />
 
-        <button type="submit">
-          Sign in
-        </button>
+        <button type="submit">Sign in</button>
         <Link to={"/signup"}>sign_up</Link>
       </form>
-      
     </div>
   );
 }

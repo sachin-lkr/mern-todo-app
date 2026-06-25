@@ -16,23 +16,40 @@ function SignUp() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.log(formData);
+  const result = await fetch(
+    "http://localhost:8080/signup",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-    alert("Signup Successful");
+      
 
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-    });
-  };
+      body: JSON.stringify(formData),
+    }
+  );
+
+  const data = await result.json();
+  console.log(data);
+
+if (data.token) {
+  document.cookie = `token=${data.token}`;
+}
+
+  setFormData({
+    name: "",
+    email: "",
+    password: "",
+  });
+};
 
   return (
     <div className="container1">
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="signup-form"  onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
 
         <input

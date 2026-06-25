@@ -10,7 +10,9 @@ const List = () => {
   }, []);
 
   const getListData = async () => {
-    const List = await fetch("http://localhost:8080/tasks");
+    const List = await fetch("http://localhost:8080/tasks",{
+      credentials:"include"
+    });
     const list = await List.json();
     console.log(list);
     if (list.success) {
