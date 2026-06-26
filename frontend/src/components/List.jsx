@@ -21,7 +21,7 @@ const List = () => {
   };
 
   const deleteTask = async (id)=>{
-    const items = await fetch("http://localhost:8080/delete/"+id,{method:"delete"});
+    const items = await fetch("http://localhost:8080/delete/"+id,{method:"delete", credentials:"include",});
     const item = await items.json();
     
     if (item.success) {
@@ -35,6 +35,8 @@ const List = () => {
     
     if (item.success) {
      getListData()
+    }else{
+      alert("try after some time")
     }
   }
   const selectAll = (e) => {
@@ -61,7 +63,7 @@ const List = () => {
   const deleteMultiple=async()=>{
     console.log(selectedTask);
       const items = await fetch("http://localhost:8080/delete-multiple/",
-        {
+        { credentials:"include",
           method:"delete",
           body:JSON.stringify(selectedTask),
           headers:{
@@ -74,6 +76,8 @@ const List = () => {
     
     if (item.success) {
      getListData()
+    }else{
+      alert("try after some time")
     }
   }
 

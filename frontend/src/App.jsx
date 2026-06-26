@@ -5,14 +5,15 @@ import List from "./components/List"
 import { Update } from "./components/Update"
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
+import Protect from "./components/Protect.jsx"
 
 function App() {
   return(
     <>
     <Navbar/>
     <Routes>
-      <Route path="/" element={<List/>}/>
-        <Route path="/add" element={<AddTask/>}/>
+      <Route path="/" element={<Protect><List/></Protect>}/>
+        <Route path="/add" element={<Protect><AddTask/></Protect>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/update/:id" element={<Update/>}/>

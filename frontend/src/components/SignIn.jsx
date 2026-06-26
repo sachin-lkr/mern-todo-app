@@ -1,12 +1,24 @@
 import { useState } from "react";
 import "../style/signUp.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem("login");
+
+    console.log(user);
+
+    if (user) {
+      navigate("/");
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -26,8 +38,13 @@ function SignIn() {
     });
     const data = await result.json();
     console.log(data);
-    if (data.token) {
+    if (data.success) {
       document.cookie = `token=${data.token}`;
+      localStorage.setItem("login", formData.email);
+      window.dispatchEvent(new Event('localStorage-change'))
+      navigate("/");
+    } else {
+      alert(data.msg);
     }
     setFormData({
       email: "",

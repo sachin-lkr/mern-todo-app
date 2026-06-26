@@ -87,7 +87,7 @@ app.post("/signup", async (req, res) => {
 })
 
 
-app.post("/add-task", async (req, res) => {
+app.post("/add-task",verifyJWTtoken, async (req, res) => {
     const db = await connection();
     const collection = await db.collection(collectioName);
     const result = await collection.insertOne(req.body);
@@ -116,21 +116,9 @@ app.get("/tasks",verifyJWTtoken, async (req, res) => {
 
 });
 
- function verifyJWTtoken(req,res,next){
-    console.log("verifyJWTtoken",req.cookies["token"]);
-    const token = req.cookies["token"];
-    jwt.verify(token,"google",(error,decode)=>{
-        if(error){
-            return res.send("invaid token")
-        }
-        next()
-        console.log(decode);
-    })
-    
 
-};
 // update task form
-app.get("/task/:id", async (req, res) => {
+app.get("/task/:id",verifyJWTtoken, async (req, res) => {
     const db = await connection();
     const collection = await db.collection(collectioName);
     const { id } = req.params;
@@ -144,7 +132,7 @@ app.get("/task/:id", async (req, res) => {
 });
 
 // update task:-
-app.put("/update-task", async (req, res) => {
+app.put("/update-task",verifyJWTtoken, async (req, res) => {
     const db = await connection();
     const collection = await db.collection(collectioName);
     const { _id, ...fields } = req.body;
@@ -159,7 +147,7 @@ app.put("/update-task", async (req, res) => {
 
 });
 // single delete
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/delete/:id",verifyJWTtoken, async (req, res) => {
     const { id } = req.params;
     console.log(id)
     const db = await connection();
@@ -175,7 +163,7 @@ app.delete("/delete/:id", async (req, res) => {
     res.send("working......");
 });
 // multiple delete
-app.delete("/delete-multiple", async (req, res) => {
+app.delete("/delete-multiple",verifyJWTtoken, async (req, res) => {
     const db = await connection();
     const Ids = req.body;
     const deleteTaskId = Ids.map((item) => new ObjectId(item));
@@ -193,7 +181,19 @@ app.delete("/delete-multiple", async (req, res) => {
 
 });
 
+ function verifyJWTtoken(req,res,next){
+    console.log("verifyJWTtoken",req.cookies["token"]);
+    const token = req.cookies["token"];
+    jwt.verify(token,"google",(error,decode)=>{
+        if(error){
+            return res.send("invaid token")
+        }
+        next()
+        console.log(decode);
+    })
+    
 
+};
 app.listen(PORT, () => {
     console.log("server listen on port 8080");
 })

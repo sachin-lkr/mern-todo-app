@@ -9,15 +9,18 @@ const handelAddTask= async()=>{
   let result =await fetch("http://localhost:8080/add-task",{
     method:"post",
     body:JSON.stringify(taskData),
+    credentials:"include",
     headers:{
       'Content-Type':'application/JSON'
     }
   });
   let results= await result.json()
-  if(results){
+  if(results.success){
     navigate("/")
     console.log("new task added");
 
+  }else{
+    alert("try after sometime")
   }
  }
 
